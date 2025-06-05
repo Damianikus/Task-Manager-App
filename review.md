@@ -1,4 +1,4 @@
-Wie unterstützt uns scrum?
+**Wie unterstützt uns scrum?**
 
 Review: Struktur, Klarheit und Teamspirit – unsere Erfahrungen mit Scrum
 
@@ -11,15 +11,14 @@ Was uns besonders überzeugt: Mit Scrum folgen wir einem roten Faden, der uns si
 Fazit: Scrum bietet nicht nur eine übersichtliche Arbeitsweise, sondern stärkt auch das Miteinander im Team. Für uns ein echter Gewinn im Projektalltag!
 
 
-
-Wie bhindert uns Scrum?
+**Wie behindert uns Scrum?**
 
 Um es kurz zu machen: Eigentlich nicht. Seit wir mit Scrum arbeiten, profitieren wir von klarer Struktur, besserer Zusammenarbeit und effizientem Fortschritt.
 
 Natürlich erfordert das System eine gewisse Disziplin – tägliche Meetings, konsequente Planung und stetige Transparenz sind Pflicht. Wer das nicht gewohnt ist, braucht anfangs vielleicht etwas Zeit zur Umstellung. Aber genau diese konsequente Arbeitsweise ist es, die letztlich den Erfolg bringt.
 
 
-Wo stehen wir?
+**Wo stehen wir?**
 
 Aktueller Stand unseres Taskmanagers
 
@@ -32,7 +31,7 @@ Ein besonderer Fokus liegt aktuell auf der Überarbeitung der Oberfläche. Ziel 
 Wir sind auf einem guten Weg – der Feinschliff beginnt!
 
 
-Was machen wir als nächstes?
+**Was machen wir als nächstes?**
 
 Nächste Schritte im Projekt
 
