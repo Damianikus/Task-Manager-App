@@ -1,6 +1,9 @@
 import streamlit as st
 from datetime import datetime, timedelta
+from collections import defaultdict
 import locale
+
+st.set_page_config(layout="wide")
 
 # Session State initialisieren
 if "tasks" not in st.session_state:
@@ -9,13 +12,47 @@ if "tasks" not in st.session_state:
 if "today" not in st.session_state:
     st.session_state.today = datetime.today()
 
+if "start_of_week" not in st.session_state:
+    st.session_state.start_of_week = datetime.today()
+
+if "TASKS" not in st.session_state:
+    st.session_state.TASKS = defaultdict(list)
+
 # Dummy-Tags für die Wochentage
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-class Task:
-    def __init__(self, description, image_path, category, priority, date_beginn, date_end, done=False):
+class Category:
+    def __init__(self, description, image_path):
         self.description = description
         self.image_path = image_path
+
+    def __str__(self):
+        return self.description  # Wichtig für die Anzeige im Selectbox-Menü
+
+class Priority:
+    def __init__(self, description, image_path):
+        self.description = description
+        self.image_path = image_path
+
+    def __str__(self):
+        return self.description  # Wichtig für die Anzeige im Selectbox-Menü
+
+CATEGORY = {
+    Category(description="Arbeit", image_path="data/category/buroklammer.png"),
+    Category(description="Freizeit", image_path="data/category/gruppe.png"),
+    Category(description="Uni/Schule", image_path="data/category/study.png"),
+    Category(description="Sonstiges", image_path="data/category/zufallig.png")
+}
+
+PRIORITY = {
+    Priority(description="P0", image_path="data/priority/green.png"),
+    Priority(description="P1", image_path="data/priority/orange.png"),
+    Priority(description="P2", image_path="data/priority/red.png")
+}
+
+class Task:
+    def __init__(self, description, category, priority, date_beginn, date_end, done=False):
+        self.description = description
         self.category = category
         self.priority = priority
         self.date_beginn = date_beginn
@@ -36,11 +73,29 @@ def setDate():
     except:
         pass  # fallback, falls nicht verfügbar
     
-    start_of_week = st.session_state.today - timedelta(days=st.session_state.today.weekday())  # Montag
-    end_of_week = start_of_week + timedelta(days=6)          # Sonntag
+    st.session_state.start_of_week = st.session_state.today - timedelta(days=st.session_state.today.weekday())  # Montag
+    end_of_week = st.session_state.start_of_week + timedelta(days=6)          # Sonntag
 
     # Formatierung: "26. Mai - 1. Juni 2025"
-    return f"{start_of_week.strftime('%d. %B')} - {end_of_week.strftime('%d. %B %Y')}"
+    return f"{st.session_state.start_of_week.strftime('%d. %B')} - {end_of_week.strftime('%d. %B %Y')}"
+
+@st.dialog("Task erstellen")
+def createDialog():
+    description = st.text_input(label="Beschreibung")
+    category = st.selectbox(label="Kategorie", options=CATEGORY)
+    priority = st.selectbox(label="Priorität", options=PRIORITY)
+    date = st.date_input("Datum wählen", st.session_state.today)
+    columns = st.columns([1,1])
+    with columns[0]:
+        startTime = st.time_input(label="Startzeit")
+    with columns[1]:
+        endTime = st.time_input("Endzeit", st.session_state.today + timedelta(minutes=30))
+    done = st.checkbox("Task erledigt")
+    if st.button("Erstellen", disabled=description.strip() == ""):
+        dateAsText = (f"{date.day}/{date.month}/{date.year}")
+        st.session_state.TASKS[dateAsText].append(Task(description, category, priority, startTime, endTime, done))
+        st.rerun()
+        st.text(dateAsText)
 
 st.title("Task Manager")
 
@@ -55,7 +110,17 @@ with columns[2]:
     st.markdown(setDate())
 
 cols = st.columns(7)
+dateWeekday = st.session_state.start_of_week
 for i, weekday in enumerate(WEEKDAYS):
-    cols[i].metric(label=WEEKDAYS[i], value="")
+    dateWeekday = dateWeekday + timedelta(days=i)
+    with cols[i]:
+        with st.container():
+            st.markdown(f"### {weekday}")
+            date = (f"{dateWeekday.day}/{dateWeekday.month}/{dateWeekday.year}")
+            if date in st.session_state.TASKS.keys():
+                for task in st.session_state.TASKS[date]:
+                    st.write(task.description)
+    dateWeekday = dateWeekday - timedelta(days=i)
 
-st.button("Task hinzufügen")
+if st.button("Task hinzufügen"):
+    createDialog()
