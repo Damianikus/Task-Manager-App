@@ -84,3 +84,7 @@ Am Ende der Projektlaufzeit verfügt unsere App über alle grundlegenden Funktio
 **Wie gut passt unser Finales Produkt zu der eingangs formulierten Produkt Vision?**
 
 Unser finales Produkt passt insgesamt sehr gut zu der ursprünglich formulierten Produktvision. Die zentralen Ziele – eine einfache und übersichtliche Möglichkeit zur Aufgabenverwaltung mit grundlegenden Funktionen – konnten erfolgreich umgesetzt werden. Es gibt zwar einige kleinere Abweichungen bei einzelnen Features, die noch nicht vollständig realisiert wurden, doch im Großen und Ganzen entspricht das Ergebnis unserer Vorstellung. 
+
+---
+
+Link: https://github.com/Damianikus/Task-Manager-App
